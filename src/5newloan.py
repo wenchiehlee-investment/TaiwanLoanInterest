@@ -272,7 +272,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         if metric == "金額":
             # Stacked area for amounts
             pivot = subset.pivot_table(index="年月", columns="類別", values="值", aggfunc="sum").sort_index()
-            categories = list(pivot.columns)
+            categories = [c for c in pivot.columns if c != "合計"]
             values = [pivot[cat].values for cat in categories]
             plt.stackplot(pivot.index, values, labels=categories)
         else:
