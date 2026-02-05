@@ -261,6 +261,12 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         "DejaVu Sans",
     ]
     plt.rcParams["axes.unicode_minus"] = False
+    plt.rcParams["font.size"] = 12
+    plt.rcParams["axes.titlesize"] = 14
+    plt.rcParams["axes.labelsize"] = 12
+    plt.rcParams["xtick.labelsize"] = 10
+    plt.rcParams["ytick.labelsize"] = 10
+    plt.rcParams["legend.fontsize"] = 10
 
     for metric, filename in [("金額", "5newloan_amount"), ("利率", "5newloan_rate")]:
         subset = long[long["指標"].str.contains(metric)]
