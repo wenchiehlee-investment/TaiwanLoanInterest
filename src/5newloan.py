@@ -5,6 +5,7 @@ import datetime as dt
 import re
 import zipfile
 import os
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 import pandas as pd
@@ -308,6 +309,22 @@ def write_csv(data: pd.DataFrame, out_path: Path) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     data.to_csv(out_path, index=False, quoting=csv.QUOTE_MINIMAL)
 
+def update_readme_timestamp(readme_path: Path, timestamp: str) -> None:
+    if not readme_path.exists():
+        return
+    content = readme_path.read_text(encoding="utf-8")
+    pattern = r"Update time: .*"
+    replacement = f"Update time: {timestamp}"
+    if re.search(pattern, content):
+        content = re.sub(pattern, replacement, content, count=1)
+    else:
+        marker = "### 圖表預覽（5newloan）"
+        if marker in content:
+            content = content.replace(marker, f"{marker}\n\n{replacement}", 1)
+        else:
+            content = f"{replacement}\n\n" + content
+    readme_path.write_text(content, encoding="utf-8")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download and plot CBC 5newloan data.")
@@ -344,6 +361,9 @@ def main() -> None:
     if args.plot:
         long = _to_long(data)
         plot_series(long, out_dir / "plots")
+
+    timestamp = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S CST")
+    update_readme_timestamp(Path("README.md"), timestamp)
 
 
 if __name__ == "__main__":
