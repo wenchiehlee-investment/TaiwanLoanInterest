@@ -18,7 +18,6 @@
 |-----|------|---------|---------|
 | 中央銀行 | https://www.cbc.gov.tw/tw/cp-528-1079-B4682-1.html | 五大銀行新承做放款金額與利率 (5newloan) | 每月 |
 | 中央銀行 | https://www.cbc.gov.tw/tw/cp-529-1081-195A7-1.html | 存放款加權平均利率 (AVERAGEIR) | 每季 |
-| 中央銀行統計 | https://www.cbc.gov.tw/tw/np-528-1.html | 金融統計月報 | 每月 |
 | 金管會銀行局 | banking.gov.tw | 銀行利率彙整 | 不定期 |
 | 聯徵中心 | jcic.org.tw | 平均利率統計 | 每月 |
 
