@@ -268,18 +268,33 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
             continue
 
         plt.figure(figsize=(10, 6))
-        for cat in sorted(subset["類別"].unique()):
-            series = subset[subset["類別"] == cat].sort_values("年月")
-            plt.plot(series["年月"], series["值"], label=cat)
 
-        plt.xticks(rotation=45, ha="right")
+        if metric == "金額":
+            # Stacked area for amounts
+            pivot = subset.pivot_table(index="年月", columns="類別", values="值", aggfunc="sum").sort_index()
+            categories = list(pivot.columns)
+            values = [pivot[cat].values for cat in categories]
+            plt.stackplot(pivot.index, values, labels=categories)
+        else:
+            # Line chart for rates
+            for cat in sorted(subset["類別"].unique()):
+                series = subset[subset["類別"] == cat].sort_values("年月")
+                plt.plot(series["年月"], series["值"], label=cat)
+
+        # Reduce x-axis label density (show every 6th month)
+        months = sorted(subset["年月"].unique())
+        if months:
+            step = 6
+            tick_positions = [m for i, m in enumerate(months) if i % step == 0]
+            plt.xticks(tick_positions, rotation=45, ha="right")
+        else:
+            plt.xticks(rotation=45, ha="right")
         plt.title(f"五大銀行新承做放款{metric} (月)")
         plt.xlabel("月份")
         plt.ylabel(metric)
         plt.tight_layout()
         plt.legend(fontsize=8)
         plt.savefig(out_dir / f"{filename}.svg", format="svg")
-        plt.savefig(out_dir / f"{filename}.png", format="png", dpi=150)
         plt.close()
 
 
