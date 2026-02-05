@@ -267,7 +267,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         if subset.empty:
             continue
 
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(15, 9))
 
         if metric == "金額":
             # Stacked area for amounts
