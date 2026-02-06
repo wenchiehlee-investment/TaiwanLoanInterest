@@ -164,6 +164,11 @@ def _build_columns(df: pd.DataFrame, header_row: int) -> tuple[list[str], int]:
     for cat, metric in zip(categories, next_row):
         cat = cat.strip() if isinstance(cat, str) else ""
         metric = metric.strip() if isinstance(metric, str) else ""
+        # Normalize spacing like "存 款" -> "存款"
+        metric = re.sub(r"\s+", "", metric)
+        cat = re.sub(r"\s+", "", cat)
+        # Some CBC tables annotate categories with trailing footnote digits (e.g. 本國銀行2).
+        cat = re.sub(r"\d+$", "", cat)
 
         # Year/quarter columns
         if metric == "" and cat in ("年", "季", "年季", "年 季"):
@@ -221,17 +226,23 @@ def load_averageir(raw_path: Path) -> pd.DataFrame:
         quarter_col = data.columns[1] if len(data.columns) > 1 else data.columns[0]
 
     data = data.rename(columns={year_col: "年", quarter_col: "季"})
+    # CBC tables often merge "年" cells, leaving NaN for the remaining quarters in the year.
+    data["年"] = data["年"].ffill()
     data = data.dropna(subset=["年", "季"])
 
     def parse_roc_year(value) -> int | None:
         if pd.isna(value):
             return None
         text = str(value).strip()
-        m = re.search(r"(\d{2,3})", text)
+        m = re.search(r"(\d{2,4})", text)
         if not m:
             return None
-        y = int(m.group(1))
-        if y < 80:  # probably already Gregorian
+        raw = m.group(1)
+        y = int(raw)
+        # CBC tables may contain:
+        # - ROC year as 2 digits (e.g. 79) or 3 digits (e.g. 114)
+        # - Gregorian year as 4 digits (e.g. 2025)
+        if len(raw) == 4:
             return y
         return y + 1911
 
@@ -288,6 +299,7 @@ def _to_long(data: pd.DataFrame) -> pd.DataFrame:
         inst = col
         if isinstance(col, str) and "_" in col:
             inst, metric = col.rsplit("_", 1)
+            metric = re.sub(r"\s+", "", metric)
         records.append((col, inst, metric))
 
     lookup = {col: (inst, metric) for col, inst, metric in records}
@@ -362,7 +374,8 @@ def _pick_value(data: pd.DataFrame, yq: str, col_contains: list[str]) -> float |
     for col in data.columns:
         if not isinstance(col, str):
             continue
-        if all(term in col for term in col_contains):
+        normalized = re.sub(r"\s+", "", col)
+        if all(term in normalized for term in col_contains):
             val = row.iloc[-1][col]
             try:
                 return float(val)
