@@ -288,7 +288,21 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
             # Line chart for rates
             for cat in sorted(subset["類別"].unique()):
                 series = subset[subset["類別"] == cat].sort_values("年月")
-                plt.plot(series["年月"], series["值"], label=cat)
+                (line,) = plt.plot(series["年月"], series["值"], label=cat, linewidth=2.0)
+                # Make the latest point visually obvious with a circle marker.
+                if not series.empty:
+                    last_x = series["年月"].iloc[-1]
+                    last_y = series["值"].iloc[-1]
+                    plt.plot(
+                        [last_x],
+                        [last_y],
+                        marker="o",
+                        markersize=8,
+                        color=line.get_color(),
+                        markeredgecolor="white",
+                        markeredgewidth=1.0,
+                        zorder=5,
+                    )
 
         # Reduce x-axis label density (show every 6th month)
         months = sorted(subset["年月"].unique())
