@@ -286,11 +286,14 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
             plt.stackplot(pivot.index, values, labels=categories)
         else:
             # Line chart for rates
+            # Only highlight the latest point for the two user-facing series:
+            # 房貸利率(購屋貸款) and 融資利率(週轉金貸款).
+            highlight_latest_categories = {"購屋貸款", "週轉金貸款"}
             for cat in sorted(subset["類別"].unique()):
                 series = subset[subset["類別"] == cat].sort_values("年月")
                 (line,) = plt.plot(series["年月"], series["值"], label=cat, linewidth=2.0)
                 # Make the latest point visually obvious with a circle marker.
-                if not series.empty:
+                if (cat in highlight_latest_categories) and (not series.empty):
                     last_x = series["年月"].iloc[-1]
                     last_y = series["值"].iloc[-1]
                     plt.plot(
