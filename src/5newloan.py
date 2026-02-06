@@ -300,7 +300,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
                         [last_x],
                         [last_y],
                         marker="o",
-                        markersize=8,
+                        markersize=12,
                         color=line.get_color(),
                         markeredgecolor="white",
                         markeredgewidth=1.0,
