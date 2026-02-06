@@ -10,6 +10,19 @@
 - 開放資料格式（JSON/CSV 匯出，可供程式串接）
 - 變動通知（設定條件自動推播）
 
+## 本機更新指令
+
+安裝依賴：
+```bash
+pip install -r requirements.txt
+```
+
+更新並產生圖表（會更新 `README.md` 的圖表區塊與 `data/` 內容）：
+```bash
+python3 src/5newloan.py --plot
+python3 src/averageir.py --plot
+```
+
 ## 資料來源
 
 ### 主要資料源
