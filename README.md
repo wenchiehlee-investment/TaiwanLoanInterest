@@ -75,6 +75,24 @@ Update time: 2026-02-06 09:34:04 CST
 
 ---
 
+### 圖表預覽（AVERAGEIR）
+
+Update time: TBD
+
+**存放款加權平均利率（存款，折線圖）**  
+
+![存放款加權平均利率（存款）](data/averageir/plots/averageir_deposit.svg)
+
+**存放款加權平均利率（放款，折線圖）**  
+
+![存放款加權平均利率（放款）](data/averageir/plots/averageir_loan.svg)
+
+**存放款加權平均利率（利差，折線圖）**  
+
+![存放款加權平均利率（利差）](data/averageir/plots/averageir_spread.svg)
+
+---
+
 ## 與股票投資分析的整合（GoodInfo.Analyzer）
 
 本專案設計為可與 [Python-Actions.GoodInfo.Analyzer](../Python-Actions.GoodInfo.Analyzer) 整合，提供股票投資決策所需的宏觀經濟數據。
