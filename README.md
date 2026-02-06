@@ -77,19 +77,7 @@ Update time: 2026-02-06 09:34:04 CST
 
 ### 圖表預覽（AVERAGEIR）
 
-Update time: TBD
-
-**存放款加權平均利率（存款，折線圖）**  
-
-![存放款加權平均利率（存款）](data/averageir/plots/averageir_deposit.svg)
-
-**存放款加權平均利率（放款，折線圖）**  
-
-![存放款加權平均利率（放款）](data/averageir/plots/averageir_loan.svg)
-
-**存放款加權平均利率（利差，折線圖）**  
-
-![存放款加權平均利率（利差）](data/averageir/plots/averageir_spread.svg)
+（尚未產生）請執行 `python3 src/averageir.py --plot` 產生 `data/averageir/plots/*.svg` 後，README 會自動更新此區塊。
 
 ---
 
