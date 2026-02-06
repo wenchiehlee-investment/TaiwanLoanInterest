@@ -380,9 +380,9 @@ def update_readme_latest_rates(readme_path: Path, data: pd.DataFrame) -> None:
 
     parts = []
     if mortgage_rate is not None:
-        parts.append(f"房貸利率 {mortgage_rate:.3f}%")
+        parts.append(f"**房貸利率 {mortgage_rate:.3f}%**")
     if finance_rate is not None:
-        parts.append(f"融資利率 {finance_rate:.3f}%")
+        parts.append(f"**融資利率 {finance_rate:.3f}%**")
     latest_line = f"最新月份（{ym}）：{'、'.join(parts)}"
 
     content = readme_path.read_text(encoding="utf-8")
