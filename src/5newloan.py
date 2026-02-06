@@ -253,6 +253,8 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
     import matplotlib.pyplot as plt
 
     out_dir.mkdir(parents=True, exist_ok=True)
+    # Bump plot font sizes to be more readable in SVG previews.
+    font_bump = 4
     plt.rcParams["font.sans-serif"] = [
         "Noto Sans CJK TC",
         "PingFang TC",
@@ -262,12 +264,12 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         "DejaVu Sans",
     ]
     plt.rcParams["axes.unicode_minus"] = False
-    plt.rcParams["font.size"] = 14
-    plt.rcParams["axes.titlesize"] = 16
-    plt.rcParams["axes.labelsize"] = 14
-    plt.rcParams["xtick.labelsize"] = 12
-    plt.rcParams["ytick.labelsize"] = 12
-    plt.rcParams["legend.fontsize"] = 12
+    plt.rcParams["font.size"] = 14 + font_bump
+    plt.rcParams["axes.titlesize"] = 16 + font_bump
+    plt.rcParams["axes.labelsize"] = 14 + font_bump
+    plt.rcParams["xtick.labelsize"] = 12 + font_bump
+    plt.rcParams["ytick.labelsize"] = 12 + font_bump
+    plt.rcParams["legend.fontsize"] = 12 + font_bump
 
     for metric, filename in [("金額", "5newloan_amount"), ("利率", "5newloan_rate")]:
         subset = long[long["指標"].str.contains(metric)]
@@ -300,7 +302,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         plt.xlabel("月份")
         plt.ylabel(metric)
         plt.tight_layout()
-        plt.legend(fontsize=8)
+        plt.legend(fontsize=8 + font_bump)
         plt.savefig(out_dir / f"{filename}.svg", format="svg")
         plt.close()
 
@@ -324,6 +326,83 @@ def update_readme_timestamp(readme_path: Path, timestamp: str) -> None:
         else:
             content = f"{replacement}\n\n" + content
     readme_path.write_text(content, encoding="utf-8")
+
+def _pick_rate_value(data: pd.DataFrame, ym: str, col_candidates: list[str], contains_terms: list[str]) -> float | None:
+    if ym not in set(data["年月"].astype(str).tolist()):
+        return None
+    row = data.loc[data["年月"] == ym]
+    if row.empty:
+        return None
+
+    for col in col_candidates:
+        if col in data.columns:
+            value = row.iloc[-1][col]
+            try:
+                return float(value)
+            except Exception:
+                return None
+
+    for col in data.columns:
+        if not isinstance(col, str):
+            continue
+        if all(t in col for t in contains_terms):
+            value = row.iloc[-1][col]
+            try:
+                return float(value)
+            except Exception:
+                return None
+
+    return None
+
+
+def update_readme_latest_rates(readme_path: Path, data: pd.DataFrame) -> None:
+    if not readme_path.exists() or data.empty or "年月" not in data.columns:
+        return
+
+    ym = data["年月"].max()
+    if not isinstance(ym, str) or not re.match(r"\d{4}-\d{2}", ym):
+        return
+
+    mortgage_rate = _pick_rate_value(
+        data,
+        ym,
+        col_candidates=["購屋貸款_利率"],
+        contains_terms=["購屋", "利率"],
+    )
+    finance_rate = _pick_rate_value(
+        data,
+        ym,
+        col_candidates=["週轉金貸款_利率"],
+        contains_terms=["週轉金", "利率"],
+    )
+    if mortgage_rate is None and finance_rate is None:
+        return
+
+    parts = []
+    if mortgage_rate is not None:
+        parts.append(f"房貸利率 {mortgage_rate:.3f}%")
+    if finance_rate is not None:
+        parts.append(f"融資利率 {finance_rate:.3f}%")
+    latest_line = f"最新月份（{ym}）：{'、'.join(parts)}"
+
+    content = readme_path.read_text(encoding="utf-8")
+    lines = content.splitlines()
+    needle = "**新承做放款利率（折線圖）**"
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        out.append(line)
+        if needle in line:
+            next_i = i + 1
+            if next_i < len(lines) and lines[next_i].lstrip().startswith("最新月份（"):
+                out.append(latest_line + "  ")
+                i += 2
+                continue
+            out.append(latest_line + "  ")
+        i += 1
+
+    readme_path.write_text("\n".join(out) + ("\n" if content.endswith("\n") else ""), encoding="utf-8")
 
 
 def main() -> None:
@@ -364,6 +443,7 @@ def main() -> None:
 
     timestamp = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S CST")
     update_readme_timestamp(Path("README.md"), timestamp)
+    update_readme_latest_rates(Path("README.md"), data)
 
 
 if __name__ == "__main__":
