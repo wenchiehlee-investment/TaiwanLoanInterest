@@ -38,6 +38,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Font Diagnostics
+        run: |
+          echo "=== System Fonts (CJK) ==="
+          fc-list :lang=zh
+          echo "=== Matplotlib Fonts ==="
+          python3 -c "import matplotlib.font_manager as fm; print('\n'.join(sorted([f.name for f in fm.fontManager.ttflist if 'CJK' in f.name])))"
+          rm -rf ~/.cache/matplotlib
+          rm -rf /tmp/mplconfig
+
       - name: Update 5newloan (Monthly)
         run: |
           python3 src/5newloan.py --plot
