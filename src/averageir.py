@@ -318,6 +318,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
 
     font_bump = 4
     plt.rcParams["font.sans-serif"] = [
+        "WenQuanYi Micro Hei",
         "Noto Sans CJK TC",
         "PingFang TC",
         "Heiti TC",

@@ -256,6 +256,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
     # Bump plot font sizes to be more readable in SVG previews.
     font_bump = 4
     plt.rcParams["font.sans-serif"] = [
+        "WenQuanYi Micro Hei",
         "Noto Sans CJK TC",
         "PingFang TC",
         "Heiti TC",
