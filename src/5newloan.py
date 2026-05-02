@@ -263,6 +263,7 @@ def plot_series(long: pd.DataFrame, out_dir: Path) -> None:
         "Arial Unicode MS",
         "DejaVu Sans",
     ]
+    plt.rcParams["svg.fonttype"] = "path"
     plt.rcParams["axes.unicode_minus"] = False
     plt.rcParams["font.size"] = 14 + font_bump
     plt.rcParams["axes.titlesize"] = 16 + font_bump
