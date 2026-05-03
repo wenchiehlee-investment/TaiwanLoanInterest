@@ -1,0 +1,8 @@
+group:
+  - files:
+      - source: data/5newloan/raw_5newloan.csv
+        dest: data/loaninterest_raw/raw_5newloan.csv
+      - source: data/averageir/raw_averageir.csv
+        dest: data/loaninterest_raw/raw_averageir.csv
+    repos: |
+      wenchiehlee-money/biztrends.TW

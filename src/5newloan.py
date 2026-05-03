@@ -454,7 +454,7 @@ def main() -> None:
         raw_path = raw_path.replace(new_raw_path)
 
     write_csv(data, out_dir / f"5newloan_{ym}.csv")
-    write_csv(data, out_dir / "5newloan_latest.csv")
+    write_csv(data, out_dir / "raw_5newloan.csv")
 
     if args.plot:
         long = _to_long(data)

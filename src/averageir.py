@@ -528,7 +528,7 @@ def main() -> None:
         raw_path = raw_path.replace(raw_path.with_name(f"averageir_{yq}{raw_path.suffix}"))
 
     write_csv(data, out_dir / f"averageir_{yq}.csv")
-    write_csv(data, out_dir / "averageir_latest.csv")
+    write_csv(data, out_dir / "raw_averageir.csv")
 
     if args.plot:
         long = _to_long(data)
