@@ -4,5 +4,7 @@ group:
         dest: data/loaninterest_raw/raw_5newloan.csv
       - source: data/averageir/raw_averageir.csv
         dest: data/loaninterest_raw/raw_averageir.csv
+      - source: data/raw_column_definition.md
+        dest: data/loaninterest_raw/raw_column_definition.md
     repos: |
       wenchiehlee-money/biztrends.TW
