@@ -1,9 +1,9 @@
 group:
   - files:
       - source: data/5newloan/raw_5newloan.csv
-        dest: data/loaninterest_raw/raw_5newloan.csv
+        dest: data/TaiwanLoanInterest/raw_5newloan.csv
       - source: data/averageir/raw_averageir.csv
-        dest: data/loaninterest_raw/raw_averageir.csv
+        dest: data/TaiwanLoanInterest/raw_averageir.csv
       - source: definitions/raw_column_definition_5newloan.md
         dest: definitions/raw_column_definition_5newloan.md
       - source: definitions/raw_column_definition_averageir.md
