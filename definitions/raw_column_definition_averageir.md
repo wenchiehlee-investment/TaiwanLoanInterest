@@ -34,3 +34,5 @@ destination: https://raw.githubusercontent.com/wenchiehlee-money/biztrends.TW/re
 | `信用合作社_利差` | float | 信用合作社放款利率 − 存款利率，單位：% | `1.64` |
 | `農漁會信用部_利差` | float | 農漁會信用部放款利率 − 存款利率，單位：% | `1.70` |
 | `信託投資公司_利差` | float | 信託投資公司放款利率 − 存款利率，單位：%；2000 年代後為空值 | `` |
+| `download_timestamp` | string | 原始資料下載或取得時間 (CST) | `2026-05-23 21:07:11` |
+| `process_timestamp` | string | CSV 產生或清洗完成時間 (CST) | `2026-05-23 21:07:11` |

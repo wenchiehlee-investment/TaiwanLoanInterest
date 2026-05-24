@@ -30,3 +30,5 @@ destination: https://raw.githubusercontent.com/wenchiehlee-money/biztrends.TW/re
 | `合計_加權平均利率` | float | 全體新承作放款加權平均利率（含國庫借款），單位：% | `2.105` |
 | `不含國庫借款之加權平均利率` | float | 全體新承作放款加權平均利率（不含國庫借款），單位：% | `2.142` |
 | `不含國庫借款之加權平均利率_1` | float | 同上欄備用欄位，CBC 原始表格有時有兩欄；通常為空值 | `` |
+| `download_timestamp` | string | 原始資料下載或取得時間 (CST) | `2026-05-23 21:07:05` |
+| `process_timestamp` | string | CSV 產生或清洗完成時間 (CST) | `2026-05-23 21:07:05` |

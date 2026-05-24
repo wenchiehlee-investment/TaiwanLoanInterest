@@ -1,0 +1,11 @@
+    if args.plot:
+        long = _to_long(data)
+        plot_series(long, out_dir / "plots")
+
+    timestamp = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S CST")
+    update_readme_timestamp(Path("README.md"), timestamp)
+    update_readme_latest_rates(Path("README.md"), data)
+
+
+if __name__ == "__main__":
+    main()

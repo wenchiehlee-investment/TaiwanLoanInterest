@@ -221,8 +221,9 @@ def load_5newloan(raw_path: Path) -> pd.DataFrame:
     data = data[data["年月"].str.match(r"\d{4}-\d{2}")]
 
     # Coerce numeric columns
+    exclude = {"年月", "download_timestamp", "process_timestamp"}
     for col in data.columns:
-        if col == "年月":
+        if col in exclude:
             continue
         data[col] = pd.to_numeric(data[col], errors="coerce")
 
@@ -231,7 +232,10 @@ def load_5newloan(raw_path: Path) -> pd.DataFrame:
 
 def _to_long(data: pd.DataFrame) -> pd.DataFrame:
     records = []
-    for col in data.columns:
+    exclude = {"年月", "download_timestamp", "process_timestamp"}
+    cols_to_keep = [col for col in data.columns if col not in (exclude - {"年月"})]
+    
+    for col in cols_to_keep:
         if col == "年月":
             continue
         metric = ""
@@ -241,7 +245,7 @@ def _to_long(data: pd.DataFrame) -> pd.DataFrame:
         records.append((col, category, metric))
 
     lookup = {col: (cat, metric) for col, cat, metric in records}
-    long = data.melt(id_vars=["年月"], var_name="欄位", value_name="值")
+    long = data[cols_to_keep].melt(id_vars=["年月"], var_name="欄位", value_name="值")
     long["類別"] = long["欄位"].map(lambda c: lookup.get(c, (c, ""))[0])
     long["指標"] = long["欄位"].map(lambda c: lookup.get(c, (c, ""))[1])
     return long
@@ -445,6 +449,12 @@ def main() -> None:
         raw_path = download_latest(out_dir, prefer_ext=args.format, verify=not args.insecure)
 
     data = load_5newloan(raw_path)
+
+    # Add timestamps for freshness tracking
+    process_ts = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S")
+    data["download_timestamp"] = process_ts
+    data["process_timestamp"] = process_ts
+
     ym = data["年月"].max()
     if not isinstance(ym, str) or not re.match(r"\d{4}-\d{2}", ym):
         ym = "latest"

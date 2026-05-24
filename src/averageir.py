@@ -267,8 +267,9 @@ def load_averageir(raw_path: Path) -> pd.DataFrame:
     data = data.drop(columns=["年", "季", "_year", "_q"])
 
     # Coerce numeric columns
+    exclude = {"季別", "download_timestamp", "process_timestamp"}
     for col in data.columns:
-        if col == "季別":
+        if col in exclude:
             continue
         data[col] = pd.to_numeric(data[col], errors="coerce")
 
@@ -291,21 +292,26 @@ def load_averageir(raw_path: Path) -> pd.DataFrame:
 
 
 def _to_long(data: pd.DataFrame) -> pd.DataFrame:
-    records: list[tuple[str, str, str]] = []
-    for col in data.columns:
+    records = []
+    exclude = {"季別", "download_timestamp", "process_timestamp"}
+    cols_to_keep = [col for col in data.columns if col not in (exclude - {"季別"})]
+
+    for col in cols_to_keep:
         if col == "季別":
             continue
-        metric = ""
-        inst = col
+        inst = ""
+        metric = col
         if isinstance(col, str) and "_" in col:
             inst, metric = col.rsplit("_", 1)
             metric = re.sub(r"\s+", "", metric)
         records.append((col, inst, metric))
 
     lookup = {col: (inst, metric) for col, inst, metric in records}
-    long = data.melt(id_vars=["季別"], var_name="欄位", value_name="值")
+    long = data[cols_to_keep].melt(id_vars=["季別"], var_name="欄位", value_name="值")
     long["機構"] = long["欄位"].map(lambda c: lookup.get(c, (c, ""))[0])
     long["指標"] = long["欄位"].map(lambda c: lookup.get(c, (c, ""))[1])
+    return long
+
     return long
 
 
@@ -520,6 +526,12 @@ def main() -> None:
         raw_path = download_latest(out_dir, prefer_ext=args.format, verify=not args.insecure)
 
     data = load_averageir(raw_path)
+
+    # Add timestamps for freshness tracking
+    process_ts = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S")
+    data["download_timestamp"] = process_ts
+    data["process_timestamp"] = process_ts
+
     yq = data["季別"].max() if (not data.empty and "季別" in data.columns) else "latest"
     if not isinstance(yq, str) or not re.match(r"\d{4}Q[1-4]", yq):
         yq = "latest"
