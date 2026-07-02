@@ -73,7 +73,7 @@ python3 src/averageir.py --plot
 
 ### 圖表預覽（5newloan）
 
-Update time: 2026-07-02 11:54:10 CST
+Update time: 2026-07-02 14:34:29 CST
 
 **新承做放款金額（堆疊圖）**  
 顯示五大銀行各類貸款「金額」的月度變化與結構占比。使用堆疊面積圖可同時觀察總量趨勢與分類貢獻度。
@@ -90,7 +90,7 @@ Update time: 2026-07-02 11:54:10 CST
 
 ### 圖表預覽（AVERAGEIR）
 
-Update time: 2026-07-02 11:54:14 CST
+Update time: 2026-07-02 14:34:34 CST
 
 **存放款加權平均利率（存款，折線圖）**  
 最新季度（2026Q1）：**本國銀行存款 1.14%**、**本國銀行放款 2.50%**、**利差 1.36%**  
@@ -112,6 +112,7 @@ Update time: 2026-07-02 11:54:14 CST
 ![存放款加權平均利率（利差）](data/averageir/plots/averageir_spread.svg)
 
 ---
+
 
 
 
