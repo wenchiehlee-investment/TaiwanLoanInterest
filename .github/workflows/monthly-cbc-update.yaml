@@ -68,8 +68,23 @@ jobs:
       - name: Sync raw CSVs to biztrends.TW
         uses: BetaHuhn/repo-file-sync-action@latest
         with:
-          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WENCHIEHLEE_MONEY }}
+          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WENCHIEHLEE_MONEY1 }}
           CONFIG_PATH: .github/sync-biztrends.yml
+          COMMIT_EACH_FILE: false
+          PR_LABELS: "automated-sync"
+          SKIP_PR: true
+
+  sync-to-money:
+    needs: update
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync raw_averageir.csv to GoogleSheet.Banks
+        uses: BetaHuhn/repo-file-sync-action@latest
+        with:
+          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WENCHIEHLEE_MONEY1 }}
+          CONFIG_PATH: .github/sync-money.yml
           COMMIT_EACH_FILE: false
           PR_LABELS: "automated-sync"
           SKIP_PR: true

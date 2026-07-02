@@ -1,0 +1,6 @@
+group:
+  - files:
+      - source: data/averageir/raw_averageir.csv
+        dest: raw_averageir.csv
+    repos: |
+      wenchiehlee-money/GoogleSheet.Banks

@@ -528,7 +528,7 @@ def main() -> None:
     data = load_averageir(raw_path)
 
     # Add timestamps for freshness tracking
-    process_ts = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S")
+    process_ts = dt.datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M:%S CST")
     data["download_timestamp"] = process_ts
     data["process_timestamp"] = process_ts
 
