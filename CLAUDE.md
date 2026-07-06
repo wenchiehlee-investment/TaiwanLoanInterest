@@ -10,6 +10,16 @@ TaiwanLoanInterest - 台灣貸款利率監控與資料收集系統。
 
 ## Key Data Sources
 
+- **台新銀行臺幣放款利率**: https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/
+  - 主要追蹤：臺幣放款參考利率、定儲利率指數、郵政定儲利率
+  - 腳本：`src/bank_loan_rates.py`
+  - 輸出：`data/bank_loan_rates/raw_bank_loan_rates.csv`
+
+- **兆豐銀行消費金融放款指標利率**: https://www.megabank.com.tw/personal/loan/credit-loan/cf-loan-rate
+  - 主要追蹤：消費金融放款指標利率規則、特定舊貸戶房貸指數
+  - 腳本：`src/bank_loan_rates.py`
+  - 輸出：`data/bank_loan_rates/raw_bank_loan_rates.csv`
+
 - **央行五大銀行統計**: https://www.cbc.gov.tw/tw/cp-528-1079-B4682-1.html
   - 檔案格式：XLS/ODS/PDF（檔名：5newloan）
   - 更新頻率：每月

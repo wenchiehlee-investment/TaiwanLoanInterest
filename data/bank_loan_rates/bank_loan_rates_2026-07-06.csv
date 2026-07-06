@@ -1,0 +1,8 @@
+as_of_date,bank_code,bank_name,product_group,rate_type,rate_percent,applicable_period,source_url,note,download_timestamp,process_timestamp
+2026-07-06,taishin,台新銀行,ntd_loan_reference_rate,一個月期定儲利率指數利率,1.740,115.06.22~115.07.20,https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/,,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,taishin,台新銀行,ntd_loan_reference_rate,三個月期定儲利率指數利率,1.740,115.06.22~115.09.20,https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/,,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,taishin,台新銀行,ntd_loan_reference_rate,六個月期定儲利率指數利率,1.718,114.12.22~115.12.20,https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/,,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,taishin,台新銀行,ntd_loan_reference_rate,一年期之郵政定期儲金利率,1.685,113.03.27~迄今,https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/,,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,taishin,台新銀行,ntd_loan_reference_rate,二年期之郵政定期儲金利率,1.720,113.03.27~迄今,https://www.taishinbank.com.tw/TSB/personal/loan/ntd-loan-rate/detail/,,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,mega,兆豐銀行,legacy_mortgage_index,原交銀指數型房貸指數,1.718,115年7月1日起,https://www.megabank.com.tw/personal/loan/credit-loan/cf-loan-rate,原交銀借戶適用；頁面揭露為特定舊貸戶指數。 下次變動日：115年10月1日。,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
+2026-07-06,mega,兆豐銀行,consumer_finance_indicator,消費金融放款指標利率計算規則,,每月或每季定期調整，依新舊貸戶規則,https://www.megabank.com.tw/personal/loan/credit-loan/cf-loan-rate,指標利率以六大行庫一年期定期儲蓄存款機動利率平均數計算；頁面主要揭露計算規則。,2026-07-06 13:03:57 CST,2026-07-06 13:03:57 CST
