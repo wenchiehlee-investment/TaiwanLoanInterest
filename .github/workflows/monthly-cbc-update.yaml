@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -63,7 +63,7 @@ jobs:
     needs: update
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Sync raw CSVs to biztrends.TW
         uses: BetaHuhn/repo-file-sync-action@latest
@@ -78,12 +78,12 @@ jobs:
     needs: update
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Sync raw_averageir.csv to GoogleSheet.Banks
         uses: BetaHuhn/repo-file-sync-action@latest
         with:
-          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WENCHIEHLEE_MONEY1 }}
+          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WJLEE1020_MONEY }}
           CONFIG_PATH: .github/sync-money.yml
           COMMIT_EACH_FILE: false
           PR_LABELS: "automated-sync"
