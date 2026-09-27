@@ -74,18 +74,3 @@ jobs:
           PR_LABELS: "automated-sync"
           SKIP_PR: true
 
-  sync-to-money:
-    needs: update
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Sync raw_averageir.csv to GoogleSheet.Banks
-        uses: BetaHuhn/repo-file-sync-action@latest
-        with:
-          GH_PAT: ${{ secrets.REPO_FILE_SYNC_WJLEE1020_MONEY }}
-          CONFIG_PATH: .github/sync-money.yml
-          COMMIT_EACH_FILE: false
-          PR_LABELS: "automated-sync"
-          SKIP_PR: true
-

@@ -1,6 +1,0 @@
-group:
-  - files:
-      - source: data/averageir/raw_averageir.csv
-        dest: data/TaiwanLoanInterest/raw_averageir.csv
-    repos: |
-      WJLEE1020/GoogleSheet.Banks
